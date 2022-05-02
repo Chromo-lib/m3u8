@@ -1,0 +1,1 @@
+# M3u8 player browser extension

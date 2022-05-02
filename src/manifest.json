@@ -1,0 +1,28 @@
+{
+  "manifest_version": 3,
+  "version": "1.0.4",
+  "name": "M3u8 Player with free TV channels",
+  "description": "MP4, WebM and M3u8 player",  
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": "34.png"
+  },
+  "icons": {
+    "34": "34.png",
+    "128": "128.png",
+    "512": "512.png"
+  },
+  "permissions": [
+    "tabs"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [        
+        "512.png",
+        "128.png",
+        "34.png"
+      ],
+      "matches": []
+    }
+  ]
+}

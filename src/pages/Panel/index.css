@@ -1,0 +1,171 @@
+* {
+  box-sizing: border-box;
+  scrollbar-width: thin;
+}
+
+body {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  background-color: black;
+  color: #fff;
+  font-size: .9rem;
+  letter-spacing: 0.6px;
+}
+
+#app-container {
+  height: 100%;
+  width: 100%;
+}
+
+main {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+}
+
+section {
+  width: calc(100% - 250px);
+  height: 100%;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+aside {
+  width: 250px;
+  height: 100%;
+  background-color: rgb(44, 44, 44);
+  overflow: hidden;
+  box-shadow: 0 1px 10px #34383c0f, 0 2px 4px #34383c14;
+}
+
+aside .list-tv {
+  height: 300px;
+}
+
+.box {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.493);
+  padding: 20px;
+  z-index: 99999;
+}
+
+.grid-2-1 {
+  display: grid;
+  grid-template-columns: 75% 22%;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+button,
+input,
+select {
+  padding: 10px;
+}
+
+button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+ul {margin: 0; padding: 0; list-style: none;}
+li { padding: 10px 15px; transition: all .25s; text-transform: capitalize; border-bottom: 1px solid #181818; }
+li:hover { background-color: #ffffff33;}
+
+.active { color: #3f51b5; font-weight: 600; }
+
+.d-flex {
+  display: flex;
+}
+
+.d-none {
+  display: none;
+}
+
+.align-center {align-items: center;}
+.justify-between {justify-content: space-between;}
+
+.w-100 {
+  width: 100%;
+}
+
+.h-100 {
+  min-height: 100%;
+}
+
+.br7 {
+  border-radius: 7px;
+}
+
+.mr-2 { margin-right: 20px; }
+.ml-2 {margin-left: 20px;}
+.mt-1 {margin-top: 10px;}
+
+.cp {cursor: pointer;}
+
+.uppercase {text-transform: uppercase;}
+.center {text-align: center;}
+.truncate {
+  width: 75%;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.bg-bleu {background-color: #3f51b5;}
+.bg-light {background-color: #181818;}
+.bg-inherit {background-color: inherit; color: inherit; border: 0;}
+
+.overflow {overflow: auto;}
+
+.blur {backdrop-filter: blur(2px);}
+
+.video-container {
+  width: 85%;
+  position: relative;  
+  overflow: hidden;
+}
+
+.video-container>div {
+  display: none;
+  position: absolute;
+  right: 20px;
+  top: 20px;  
+}
+
+.qualityLevels {
+  display: none;
+  width: calc(100% - 270px);
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 999;
+  font-size: 12px;
+}
+
+video { box-shadow: 0 1px 10px #34383c0f, 0 2px 4px #34383c14; }
+.video-container:hover .qualityLevels,.video-container:hover>div { display: flex; }
+
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #585858;
+  border-radius: 7px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: inherit;
+}
