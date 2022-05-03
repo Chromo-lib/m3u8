@@ -4,7 +4,7 @@ const Popup = () => {
   const onOpen = () => {
     chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
       let activeTab = tabs[0];
-      chrome.tabs.create({ url: 'panel.html?url=' + activeTab.url });
+      chrome.tabs.create({ url: 'panel.html?url' });
     });
   }
 

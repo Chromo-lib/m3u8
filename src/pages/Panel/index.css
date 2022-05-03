@@ -41,6 +41,7 @@ aside {
   height: 100%;
   background-color: rgb(44, 44, 44);
   overflow: hidden;
+  
   box-shadow: 0 1px 10px #34383c0f, 0 2px 4px #34383c14;
 }
 
@@ -68,7 +69,10 @@ button,
 input,
 select {
   padding: 10px;
+  outline: none;
 }
+
+option,optgroup {background-color: #181818; color: #fff;}
 
 button {
   display: flex;
@@ -92,6 +96,8 @@ li:hover { background-color: #ffffff33;}
   display: none;
 }
 
+.flex-column {flex-direction: column;}
+
 .align-center {align-items: center;}
 .justify-between {justify-content: space-between;}
 
@@ -107,9 +113,16 @@ li:hover { background-color: #ffffff33;}
   border-radius: 7px;
 }
 
+.border-0 {border: 0;}
+
 .mr-2 { margin-right: 20px; }
 .ml-2 {margin-left: 20px;}
+.ml-1 {margin-left: 10px;}
 .mt-1 {margin-top: 10px;}
+.mb-1 {margin-bottom: 10px;}
+.py-1 {padding: 10px 0;}
+.p-0 {padding: 0;}
+.m-0 {margin: 0;}
 
 .cp {cursor: pointer;}
 
@@ -126,36 +139,54 @@ li:hover { background-color: #ffffff33;}
 .bg-light {background-color: #181818;}
 .bg-inherit {background-color: inherit; color: inherit; border: 0;}
 
+.white {color: #fff !important;}
+
 .overflow {overflow: auto;}
 
 .blur {backdrop-filter: blur(2px);}
 
-.video-container {
-  width: 85%;
-  position: relative;  
-  overflow: hidden;
-}
-
-.video-container>div {
-  display: none;
-  position: absolute;
-  right: 20px;
-  top: 20px;  
-}
-
-.qualityLevels {
-  display: none;
-  width: calc(100% - 270px);
+/**********************************************/
+.modal {
   position: fixed;
-  bottom: 0;
-  left: 0;
-  z-index: 999;
-  font-size: 12px;
+  right: 10px;
+  bottom: 10px;
 }
 
-video { box-shadow: 0 1px 10px #34383c0f, 0 2px 4px #34383c14; }
-.video-container:hover .qualityLevels,.video-container:hover>div { display: flex; }
+.modal>div {
+  width: auto;
+  background-color: #585858;
+  padding: 10px;
+  border-radius: 7px;
+  border: 1px solid #747474;
+  box-shadow: 0 1px 10px #34383c0f, 0 2px 4px #34383c14;
+}
 
+.modal>button {
+  position: absolute;
+  right: 0;
+  top: -20px;
+  background-color: inherit;
+  color: #fff;
+  border: 0;
+  padding: 0;
+}
+/********************************************/
+.video-container {  
+  height: 100%;
+  width: 100%;
+  max-height: 100%;
+  max-width: 80%;
+  display: grid;
+  grid-template-rows: 1fr 2fr 1fr;
+  align-items: center;
+}
+
+.video-container div { visibility: hidden; }
+.video-container * {padding: 0; border: 0; font-size: 12px;}
+video { box-shadow: 0 1px 10px #34383c0f, 0 2px 4px #34383c14; }
+.video-container:hover div { visibility: visible; }
+
+/********************************************/
 ::-webkit-scrollbar {
   width: 7px;
   height: 7px;

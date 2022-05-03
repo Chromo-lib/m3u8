@@ -17,6 +17,7 @@
     "@hot-loader/react-dom": "^17.0.2",
     "ace-builds": "^1.4.14",
     "axios": "^0.27.1",
+    "drag-react": "^1.1.0",
     "hls.js": "^1.1.5",
     "react": "^17.0.2",
     "react-ace": "^10.1.0",
@@ -24,6 +25,7 @@
     "react-hot-loader": "^4.13.0",
     "react-split": "^2.0.14",
     "react-split-views": "^1.0.5",
+    "react-sweet-state": "^2.6.0",
     "unquer": "^1.0.2"
   },
   "devDependencies": {
