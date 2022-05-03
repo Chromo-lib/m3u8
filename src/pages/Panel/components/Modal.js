@@ -7,6 +7,6 @@ export default function Modal() {
 
   return <div className={'modal' + (modalState.show ? ' d-flex' : ' d-none')}>
     <button onClick={() => { modalActions.toggle(); }}><TimesIcon /></button>
-    <div>{modalState.content}</div>
+    <div className='w-100 overflow'>{modalState.content}</div>
   </div>
 }

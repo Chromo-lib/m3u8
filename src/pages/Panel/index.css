@@ -7,7 +7,7 @@ body {
   width: 100vw;
   height: 100vh;
   margin: 0;
-  background-color: black;
+  background-color: #050505;
   color: #fff;
   font-size: .9rem;
   letter-spacing: 0.6px;
@@ -80,11 +80,16 @@ button {
   justify-content: center;
   text-transform: uppercase;
   cursor: pointer;
+  transition: opacity .25s;
 }
+
+button:hover { opacity: 0.8; }
 
 ul {margin: 0; padding: 0; list-style: none;}
 li { padding: 10px 15px; transition: all .25s; text-transform: capitalize; border-bottom: 1px solid #181818; }
 li:hover { background-color: #ffffff33;}
+
+pre { background-color: #181818; padding: 10px; }
 
 .active { color: #3f51b5; font-weight: 600; }
 
@@ -123,6 +128,8 @@ li:hover { background-color: #ffffff33;}
 .py-1 {padding: 10px 0;}
 .p-0 {padding: 0;}
 .m-0 {margin: 0;}
+.mb-0 {margin-bottom: 0;}
+.mt-0 {margin-top: 0;}
 
 .cp {cursor: pointer;}
 
@@ -137,6 +144,7 @@ li:hover { background-color: #ffffff33;}
 
 .bg-bleu {background-color: #3f51b5;}
 .bg-light {background-color: #181818;}
+.bg-gray {background-color: #ffffff1f;}
 .bg-inherit {background-color: inherit; color: inherit; border: 0;}
 
 .white {color: #fff !important;}
@@ -147,6 +155,8 @@ li:hover { background-color: #ffffff33;}
 
 /**********************************************/
 .modal {
+  max-width: 90%;
+  max-height: 90%;
   position: fixed;
   right: 10px;
   bottom: 10px;

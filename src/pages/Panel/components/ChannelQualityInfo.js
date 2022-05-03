@@ -14,7 +14,7 @@ export default function QualityInfo() {
     return <div className='w-100'>
 
       <h3 className='w-100 d-flex align-center m-0 mb-1'>
-        <TvIcon /><span className='ml-1'>{currentChannel.name}</span>
+        <TvIcon /><span className='ml-1 uppercase'>{currentChannel.name}</span>
       </h3>
 
       <ul className='w-100 d-flex justify-between'>
