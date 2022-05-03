@@ -3,7 +3,8 @@ import { createStore, createHook } from 'react-sweet-state';
 const Store = createStore({
   initialState: {
     show: false,
-    content: null
+    content: null,
+    title: ''
   },
 
   actions: {
@@ -11,8 +12,8 @@ const Store = createStore({
       setState({ ...getState(), show: !getState().show });
     },
 
-    setContent: (content) => ({ setState, getState }) => {      
-      setState({ ...getState(), show: !getState().show, content });
+    setContent: ({ title, content }) => ({ setState, getState }) => {
+      setState({ ...getState(), show: true, title, content });
     },
   },
 

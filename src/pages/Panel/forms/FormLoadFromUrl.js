@@ -22,7 +22,6 @@ export default function FormLoadFromUrl() {
   }
 
   return <>
-    <h3 className='mt-0 uppercase'>Load From Url</h3>
     <form className='w-100' onSubmit={onLoad}>
       <input className='w-100 mb-1' type="url" name='url' placeholder='https://example.com/playlist' required />
       <button className='w-100' type='submit'>load</button>

@@ -190,14 +190,15 @@ pre { background-color: #181818; padding: 10px; }
   width: 100%;
   max-height: 100%;
   max-width: 80%;
-  display: grid;
-  grid-template-rows: 1fr 2fr 1fr;
-  align-items: center;
+  padding: 5px 0;
+  display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .video-container div { visibility: hidden; }
 .video-container * {padding: 0; border: 0; font-size: 12px;}
-video { box-shadow: 0 1px 10px #34383c0f, 0 2px 4px #34383c14; }
+video { width: 100%; box-shadow: 0 1px 10px #34383c0f, 0 2px 4px #34383c14; }
 .video-container:hover div { visibility: visible; }
 
 /********************************************/

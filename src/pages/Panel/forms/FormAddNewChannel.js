@@ -25,8 +25,6 @@ export default function FormAddNewChannel() {
   }
 
   return <>
-    <h3 className='mt-0 uppercase'>Add New Channel</h3>
-
     <form className='w-100' onSubmit={onPlayChannel}>
       <div className='w-100'>
         <label></label>

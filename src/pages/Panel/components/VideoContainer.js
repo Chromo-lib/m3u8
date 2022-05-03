@@ -4,17 +4,13 @@ import useCurrentChannel from '../store/useCurrentChannel';
 import Header from './Header';
 import QualityInfo from './ChannelQualityInfo';
 import PlayIcon from '../icons/PlayIcon';
+import useModal from '../store/useModal';
 
 let hls = null;
 
 export default function VideoContainer() {
   const [currentChannel, currentChannelActions] = useCurrentChannel();
-
-  const destroyHLS = () => {
-    hls.stopLoad();
-    hls.detachMedia();
-    hls.destroy();
-  };
+  const [_, modalActions] = useModal();
 
   const onManifestParsed = (_, data) => {
     currentChannelActions.setQualityLevels(data.levels)
@@ -25,9 +21,11 @@ export default function VideoContainer() {
     if (data.fatal) {
       switch (data.type) {
         case Hls.ErrorTypes.NETWORK_ERROR:
+          modalActions.setContent({ title: 'NETWORK_ERROR', content: <p>{currentChannel.url}</p> });
           hls.startLoad();
           break;
         case Hls.ErrorTypes.MEDIA_ERROR:
+          modalActions.setContent({ title: 'MEDIA_ERROR', content: <p>{currentChannel.url}</p> });
           hls.recoverMediaError();
           break;
         default:
@@ -41,7 +39,7 @@ export default function VideoContainer() {
     if (!document.querySelector('video')) return;
     const video = document.querySelector('video');
 
-    if (hls) destroyHLS();
+    if (hls) hls.destroy();
 
     if (Hls.isSupported() && currentChannel.type === 'm3u8') {
       hls = new Hls();
@@ -68,7 +66,7 @@ export default function VideoContainer() {
   return <section>
     <div className='video-container'>
       <Header />
-      <video className='w-100 br7 mb-1' src="" controls autoPlay></video>
+      <video className='br7 mb-1' src="" controls autoPlay></video>
 
       <div className='w-100'>
         <div className='text-left d-flex align-center mb-1 yellow'>
