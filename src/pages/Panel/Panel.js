@@ -41,7 +41,7 @@ export default function Panel() {
       <ul className='w-100 d-flex justify-between'>
         {tabs.map((tab, i) => <li
           key={i}
-          className={'w-100 bg-bleu uppercase center' + (tabIndex === i ? ' bg-gray' : '')}
+          className={'w-100 bg-yellow uppercase center' + (tabIndex === i ? ' bg-gray' : '')}
           title={tab.name}
           onClick={() => { onChangeTab(i) }}>
           {tab.icon}

@@ -14,14 +14,5 @@
   },
   "permissions": [
     "tabs"
-  ],
-  "web_accessible_resources": [
-    {
-      "resources": [        
-        "512.png",
-        "128.png",
-        "34.png"
-      ]
-    }
   ]
 }

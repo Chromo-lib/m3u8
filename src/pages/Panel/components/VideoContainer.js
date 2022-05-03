@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import * as Hls from 'hls.js';
 import useCurrentChannel from '../store/useCurrentChannel';
 import Header from './Header';
+import QualityInfo from './ChannelQualityInfo';
+import PlayIcon from '../icons/PlayIcon';
 
 let hls = null;
 
@@ -67,6 +69,15 @@ export default function VideoContainer() {
     <div className='video-container'>
       <Header />
       <video className='w-100 br7 mb-1' src="" controls autoPlay></video>
+
+      <div className='w-100'>
+        <div className='text-left d-flex align-center mb-1 yellow'>
+          <PlayIcon width='12' height='12' />
+          <span className='ml-1 uppercase mr-2'>{currentChannel.name}</span>
+          <p className='m-0 text-left truncate white'>({currentChannel.url})</p>
+        </div>
+        <QualityInfo />
+      </div>
     </div>
   </section>
 }

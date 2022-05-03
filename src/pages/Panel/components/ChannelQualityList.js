@@ -1,5 +1,5 @@
 import React from 'react'
-import useCurrentChannel from '../store/useCurrentChannel'
+import useCurrentChannel from '../store/useCurrentChannel';
 
 export default function ChannelQualityList() {
 
@@ -11,10 +11,11 @@ export default function ChannelQualityList() {
   }
 
   if (qualityLevels) {
-    return <select className='bg-inherit p-0' name="quality" onChange={onChange}>
+    return <select className='bg-inherit p-0' name="quality" onChange={onChange}
+      defaultValue={currentChannel.qualityIndex}>
       <optgroup label='Quality'>
-        <option value="-1">auto</option>
-        {qualityLevels.map((q, i) => <option key={i} value={i}>{q.name}</option>)}
+        <option value={-1}>auto</option>
+        {qualityLevels.map((q, i) => <option key={i} value={i}>{q.height}p</option>)}
       </optgroup>
     </select>
   }

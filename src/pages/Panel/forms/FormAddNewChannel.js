@@ -24,7 +24,8 @@ export default function FormAddNewChannel() {
     channelsActions.addNew(newChannel);
   }
 
-  return <div className='w-100 blur'>
+  return <>
+    <h3 className='mt-0 uppercase'>Add New Channel</h3>
 
     <form className='w-100' onSubmit={onPlayChannel}>
       <div className='w-100'>
@@ -54,9 +55,9 @@ export default function FormAddNewChannel() {
       </button>
     </form>
 
-    <button className='w-100 mr-2' onClick={onAddChannel} title="Add To Favorites">
+    <button className='w-100 bg-blue mr-2' onClick={onAddChannel} title="Add To Favorites">
       <PlusIcon />
       <span className='ml-2'>Add to favorites</span>
     </button>
-  </div>
+  </>
 }
