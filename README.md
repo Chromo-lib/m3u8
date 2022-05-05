@@ -1,4 +1,4 @@
-# M3u8 player browser extension
+# 🎥 HLS Streaming Player browser extension
 
 <p align="center">
   <a href="" rel="nofollow">
