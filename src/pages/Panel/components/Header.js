@@ -4,9 +4,12 @@ import ChannelQualityList from './ChannelQualityList';
 import FormAddNewChannel from '../forms/FormAddNewChannel';
 
 import useModal from '../store/useModal';
+import FormLoadFromUrl from '../forms/FormLoadFromUrl';
+import About from './About';
+
 import PlusIcon from '../icons/PlusIcon';
 import LoadIcon from '../icons/LoadIcon';
-import FormLoadFromUrl from '../forms/FormLoadFromUrl';
+import InfoIcon from '../icons/InfoIcon';
 
 export default function Header() {
   const [_, modalActions] = useModal();
@@ -33,6 +36,12 @@ export default function Header() {
     <div className='d-flex align-center'>
       <span className='ml-2'></span>
       <ChannelQualityList />
+      <button
+        className='bg-inherit p-0 ml-2'
+        title="Load Channels From URL"
+        onClick={() => { modalActions.setContent({ title: 'About', content: <About /> }); }}>
+        <InfoIcon />
+      </button>
     </div>
   </div>
 }

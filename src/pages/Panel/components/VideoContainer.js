@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import * as Hls from 'hls.js';
 import useCurrentChannel from '../store/useCurrentChannel';
 import Header from './Header';
@@ -9,12 +9,18 @@ import useModal from '../store/useModal';
 let hls = null;
 
 export default function VideoContainer() {
+  const videoRef = useRef();
   const [currentChannel, currentChannelActions] = useCurrentChannel();
   const [_, modalActions] = useModal();
 
   const onManifestParsed = (_, data) => {
     currentChannelActions.setQualityLevels(data.levels)
   }
+
+  // const onFRAG_BUFFERED = (eventName, data) =>{ 
+  //   const bitrate =Math.round(8 * data.stats.total / (data.stats.buffering.end - data.stats.loading.first))
+  //   console.log(bitrate,data);
+  // }
 
   const onHlsError = (event, data) => {
     console.log('HLS.Events.ERROR: ', event, data);
@@ -33,11 +39,13 @@ export default function VideoContainer() {
           break;
       }
     }
+
+    localStorage.clear('current-channel');
   }
 
   useEffect(() => {
-    if (!document.querySelector('video')) return;
-    const video = document.querySelector('video');
+    if (!videoRef.current) return;
+    const video = videoRef.current;
 
     if (hls) hls.destroy();
 
@@ -47,6 +55,7 @@ export default function VideoContainer() {
       hls.attachMedia(video);
       hls.currentLevel = parseInt(currentChannel.qualityIndex, 10);
 
+      // hls.on(Hls.Events.FRAG_BUFFERED, onFRAG_BUFFERED)
       hls.on(Hls.Events.MANIFEST_PARSED, onManifestParsed);
       hls.on(Hls.Events.ERROR, onHlsError);
     }
@@ -58,6 +67,7 @@ export default function VideoContainer() {
     }
 
     return () => {
+      // hls.off(Hls.Events.FRAG_BUFFERED, onFRAG_BUFFERED);
       hls.off(Hls.Events.MANIFEST_PARSED, onManifestParsed);
       hls.off(Hls.Events.ERROR, onHlsError);
     }
@@ -66,7 +76,7 @@ export default function VideoContainer() {
   return <section>
     <div className='video-container'>
       <Header />
-      <video className='br7 mb-1' src="" controls autoPlay></video>
+      <video className='br7 mb-1' ref={videoRef} src="" controls autoPlay></video>
 
       <div className='w-100'>
         <div className='text-left d-flex align-center mb-1 yellow'>

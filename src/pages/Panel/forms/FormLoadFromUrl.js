@@ -27,7 +27,7 @@ export default function FormLoadFromUrl() {
       <button className='w-100' type='submit'>load</button>
     </form>
 
-    <p className='mb-0'>Example of playlist object structure</p>
+    <p className='mb-0'>Playlist object structure:</p>
     <pre className='w-100 br7 overflow'>{st}</pre>
   </>
 }

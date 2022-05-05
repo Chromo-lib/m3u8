@@ -14,7 +14,7 @@ function ListChannels({channels}) {
       className="d-flex align-center justify-between cp"
     >
       <div className={'d-flex align-center truncate' + (currentChannel.url === c.url ? ' active' : '')}
-        onClick={() => { currentChannelActions.set({ ...c, qualityIndex: -1 }); }}>
+        onClick={() => { currentChannelActions.set({ ...c }); }}>
         {currentChannel.url === c.url
           ? <PlayIcon />
           : <TvIcon />}
