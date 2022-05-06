@@ -1,16 +1,45 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import useChannels from '../store/useChannels';
 import useCurrentChannel from '../store/useCurrentChannel';
 import PlayIcon from '../icons/PlayIcon';
 import TvIcon from '../icons/TvIcon';
 import HeartIcon from '../icons/HeartIcon';
 
-function ListChannels({channels}) {
+function ListChannels({ channels }) {
   const [channelsState, channelsActions] = useChannels();
   const [currentChannel, currentChannelActions] = useCurrentChannel();
 
+  const [chs, setChs] = useState([]);
+  const [channel, setChannel] = useState('');
+
+  useEffect(() => {
+    setChs(channels);
+  }, [channels])
+
+  const onSearch = (e) => {
+    try {
+      const ch = e.target.value.toLowerCase();
+      const filtered = channels.filter(c => c.name.toLowerCase().includes(ch));
+      setChs(filtered);
+      setChannel(ch)
+    } catch (error) {
+      setChs(channels);
+      setChannel('')
+    }
+  }
+
   return <ul className='h-100 overflow list-tv'>
-    {channels.length && channels.map((c, i) => <li key={i}
+
+    <li className='p-0'>
+      <input className='w-100 bg-inherit' type="text"
+        name='channel'
+        placeholder='BBC'
+        value={channel}
+        onChange={onSearch}
+      />
+    </li>
+
+    {chs.length > 0 && chs.map((c, i) => <li key={i}
       className="d-flex align-center justify-between cp"
     >
       <div className={'d-flex align-center truncate' + (currentChannel.url === c.url ? ' active' : '')}

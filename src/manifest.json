@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "version": "1.0.5",
-  "name": "M3u8 Player with free TV channels",
-  "description": "MP4, WebM and M3u8 player with free TV channels",
+  "version": "1.0.6",
+  "name": "HLS Streaming Player",
+  "description": "MP4, WebM and HLS Streaming Player with free TV channels",
   "action": {
     "default_popup": "popup.html",
     "default_icon": "34.png"

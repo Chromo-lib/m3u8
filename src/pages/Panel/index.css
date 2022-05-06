@@ -178,6 +178,11 @@ p { word-break: break-all; }
   margin-bottom: 10px;
 }
 
+.mr-1 {
+  margin-right: 10px;
+}
+
+
 .py-1 {
   padding: 10px 0;
 }
@@ -258,6 +263,33 @@ p { word-break: break-all; }
 .blur {
   backdrop-filter: blur(2px);
 }
+
+/********************************************/
+.dropdown {
+  position: relative;
+  background-color: transparent;
+  padding: 0 15px;  
+}
+
+.dropdown button { font-size: .9rem; background-color: inherit; color: #fff; letter-spacing: 2px; }
+
+.dropdown ul {
+  display: none;
+  position: absolute;
+  border: 1px solid #747474;
+  z-index: 999999;
+  border-radius: 7px;
+}
+
+.dropdown li {
+  font-size: 0.9rem;
+  padding: 7px 15px;
+  background-color: #585858;
+  border-bottom: 1px solid #747474;
+  cursor: pointer;
+}
+
+.dropdown:hover ul, .dropdown button:hover ul {display: block;}
 
 /**********************************************/
 .modal {

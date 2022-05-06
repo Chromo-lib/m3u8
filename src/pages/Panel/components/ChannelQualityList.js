@@ -1,23 +1,37 @@
 import React from 'react'
 import useCurrentChannel from '../store/useCurrentChannel';
+import CaretDownIcon from '../icons/CaretDownIcon';
 
 export default function ChannelQualityList() {
 
   const [currentChannel, currentChannelActions] = useCurrentChannel()
   const qualityLevels = currentChannel.qualityLevels;
+  const qualityIndex = currentChannel.qualityIndex;
 
-  const onChange = e => {
-    currentChannelActions.setQualityIndex(e.target.value);
+  const onChange = levelIndex => {
+    currentChannelActions.setQualityIndex(levelIndex);
   }
 
   if (qualityLevels) {
-    return <select className='bg-inherit p-0' name="quality" onChange={onChange}
-      defaultValue={currentChannel.qualityIndex}>
-      <optgroup label='Quality'>
-        <option value={-1}>auto</option>
-        {qualityLevels.map((q, i) => <option key={i} value={i}>{q.height}p</option>)}
-      </optgroup>
-    </select>
+    return <div className='dropdown'>
+
+      <button>
+        <span className='mr-1'>Quality:
+          {qualityIndex > -1
+            ? (qualityLevels[qualityIndex].height + 'p')
+            : 'auto'}
+        </span>
+        <CaretDownIcon />
+      </button>
+
+      <ul label='Quality'>
+        <li className={qualityIndex === -1 ? 'yellow' : ''} onClick={() => { onChange(-1) }}>auto</li>
+        {qualityLevels.map((q, i) => <li
+          className={qualityIndex === i ? 'yellow' : ''}
+          key={i}
+          onClick={() => { onChange(i) }}>{q.height}p</li>)}
+      </ul>
+    </div>
   }
   else {
     return <></>

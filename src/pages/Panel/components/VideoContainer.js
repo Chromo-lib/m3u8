@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import * as Hls from 'hls.js';
 import useCurrentChannel from '../store/useCurrentChannel';
 import Header from './Header';
-import QualityInfo from './ChannelQualityInfo';
+import ChannelQualityInfo from './ChannelQualityInfo';
 import PlayIcon from '../icons/PlayIcon';
 import useModal from '../store/useModal';
 
@@ -17,18 +17,13 @@ export default function VideoContainer() {
     currentChannelActions.setQualityLevels(data.levels)
   }
 
-  // const onFRAG_BUFFERED = (eventName, data) =>{ 
-  //   const bitrate =Math.round(8 * data.stats.total / (data.stats.buffering.end - data.stats.loading.first))
-  //   console.log(bitrate,data);
-  // }
-
   const onHlsError = (event, data) => {
-    console.log('HLS.Events.ERROR: ', event, data);
+    //console.log('HLS.Events.ERROR: ', event, data);
     if (data.fatal) {
       switch (data.type) {
         case Hls.ErrorTypes.NETWORK_ERROR:
           modalActions.setContent({ title: 'NETWORK_ERROR', content: <p>{currentChannel.url}</p> });
-          hls.startLoad();
+          hls.destroy();
           break;
         case Hls.ErrorTypes.MEDIA_ERROR:
           modalActions.setContent({ title: 'MEDIA_ERROR', content: <p>{currentChannel.url}</p> });
@@ -55,7 +50,6 @@ export default function VideoContainer() {
       hls.attachMedia(video);
       hls.currentLevel = parseInt(currentChannel.qualityIndex, 10);
 
-      // hls.on(Hls.Events.FRAG_BUFFERED, onFRAG_BUFFERED)
       hls.on(Hls.Events.MANIFEST_PARSED, onManifestParsed);
       hls.on(Hls.Events.ERROR, onHlsError);
     }
@@ -67,7 +61,6 @@ export default function VideoContainer() {
     }
 
     return () => {
-      // hls.off(Hls.Events.FRAG_BUFFERED, onFRAG_BUFFERED);
       hls.off(Hls.Events.MANIFEST_PARSED, onManifestParsed);
       hls.off(Hls.Events.ERROR, onHlsError);
     }
@@ -84,7 +77,7 @@ export default function VideoContainer() {
           <span className='ml-1 uppercase mr-2'>{currentChannel.name}</span>
           <p className='m-0 text-left truncate white'>({currentChannel.url})</p>
         </div>
-        <QualityInfo />
+        <ChannelQualityInfo />
       </div>
     </div>
   </section>
