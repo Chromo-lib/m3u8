@@ -17,7 +17,7 @@ export default function ChannelQualityList() {
 
       <button>
         <span className='mr-1'>Quality:
-          {qualityIndex > -1
+          {qualityIndex > -1 && qualityLevels[qualityIndex]
             ? (qualityLevels[qualityIndex].height + 'p')
             : 'auto'}
         </span>
