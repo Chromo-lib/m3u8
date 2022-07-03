@@ -17,8 +17,9 @@ export default function FormLoadFromUrl() {
   const onLoad = async e => {
     e.preventDefault();
     const url = e.target.elements[0].value;    
-    await channelsActions.setURL(url);
+    await channelsActions.load(url);
     modalActions.toggle();
+    window.location.reload()
   }
 
   return <>

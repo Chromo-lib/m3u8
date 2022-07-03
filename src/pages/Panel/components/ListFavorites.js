@@ -6,10 +6,18 @@ import TvIcon from '../icons/TvIcon';
 import TrashIcon from '../icons/TrashIcon';
 
 export default function ListFavorites() {
-  const [channels, channelsActions] = useChannels();
-  const { favorites } = channels;
-
+  const [channelsState, channelsActions] = useChannels();
+  const { favorites } = channelsState;
   const [currentChannel, currentChannelActions] = useCurrentChannel();
+
+  const onAddOrRemoveFromFavorites = (channel) => {
+    if (channelsState.favorites.find(c => c.url === channel.url)) {
+      channelsActions.removeFromFavorites(channel);
+    }
+    else {
+      channelsActions.addToFavorites(channel)
+    }
+  }
 
   if (favorites.length) {
     return <ul className='h-100 overflow list-tv'>
@@ -25,7 +33,7 @@ export default function ListFavorites() {
         </div>
 
 
-        <div onClick={() => { channelsActions.removeFromFavorites(c) }} title="Remove from favorites">
+        <div onClick={() => { onAddOrRemoveFromFavorites(c); }} title="Remove from favorites">
           <span><TrashIcon /></span>
         </div>
       </li>)}

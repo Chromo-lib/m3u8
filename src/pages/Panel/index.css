@@ -4,7 +4,11 @@
 }
 
 :root {
+  --white:#fff;
+  --black:#000;
+  --red:#f74e4e;
   --yellow: #EED75F;
+  --shadow:0 1px 10px #34383c0f, 0 2px 4px #34383c14;
 }
 
 body {
@@ -47,7 +51,7 @@ aside {
   background-color: rgb(44, 44, 44);
   overflow: hidden;
 
-  box-shadow: 0 1px 10px #34383c0f, 0 2px 4px #34383c14;
+  box-shadow: var(--shadow);
 }
 
 aside .list-tv {
@@ -106,6 +110,9 @@ pre {
 
 p { word-break: break-all; }
 
+.tabs li { border-right: 1px solid #181818;}
+.tabs li:last-child { border-right: 0;}
+
 .active {
   color: var(--yellow);
   font-weight: 600;
@@ -137,6 +144,8 @@ p { word-break: break-all; }
   justify-content: space-between;
   gap: 20px;
 }
+
+.max-content { width: max-content; }
 
 .w-100 {
   width: 100%;
@@ -228,6 +237,7 @@ p { word-break: break-all; }
 
 .bg-blue {
   background-color: #3f51b5;
+  color: var(--white);
 }
 
 .bg-yellow {
@@ -242,14 +252,21 @@ p { word-break: break-all; }
   background-color: #ffffff1f;
 }
 
+.bg-red {
+  background-color: var(--red);
+  color: var(--white);
+}
+
 .bg-inherit {
   background-color: inherit;
   color: inherit;
   border: 0;
 }
 
+.bg-white {background-color: var(--white); color: var(--black);}
+
 .white {
-  color: #fff !important;
+  color: var(--white) !important;
 }
 
 .yellow {
@@ -263,6 +280,8 @@ p { word-break: break-all; }
 .blur {
   backdrop-filter: blur(2px);
 }
+
+.shadow {box-shadow: var(--shadow);}
 
 /********************************************/
 .dropdown {
@@ -333,6 +352,8 @@ p { word-break: break-all; }
   border: 0;
   font-size: 12px;
 }
+
+iframe { min-height: 350px; box-shadow: 0 1px 10px #34383c0f, 0 2px 4px #34383c14; }
 
 video {
   width: 100%;

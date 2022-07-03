@@ -5,6 +5,9 @@ import Panel from './Panel';
 
 import './index.css';
 
-render(<Panel />, window.document.querySelector('#app-container'));
-
-if (module.hot) module.hot.accept();
+try {
+  render(<Panel />, window.document.querySelector('#app-container'));
+  if (module.hot) module.hot.accept();
+} catch (error) {
+  console.log(error);
+}
