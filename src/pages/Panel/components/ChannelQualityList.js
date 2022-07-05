@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useCallback} from 'react'
 import useCurrentChannel from '../store/useCurrentChannel';
 import CaretDownIcon from '../icons/CaretDownIcon';
 
@@ -8,11 +8,11 @@ export default function ChannelQualityList() {
   const qualityLevels = currentChannel.qualityLevels;
   const qualityIndex = currentChannel.qualityIndex;
 
-  const onChange = levelIndex => {
+  const onChange = useCallback(levelIndex => {
     currentChannelActions.setQualityIndex(levelIndex);
-  }
+  }, []);
 
-  if (qualityLevels) {
+  if (qualityLevels && currentChannel.type === 'm3u8') {
     return <div className='dropdown'>
 
       <button>

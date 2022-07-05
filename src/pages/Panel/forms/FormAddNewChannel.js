@@ -9,7 +9,8 @@ export default function FormAddNewChannel() {
   const [currentChannel, currentChannelActions] = useCurrentChannel();
   const [channelsState, channelsActions] = useChannels();
 
-  const [newChannel, setNewChannel] = useState({ name: '', url: '', type: 'm3u8' });
+  const initState = { name: '', url: '', type: 'm3u8' };
+  const [newChannel, setNewChannel] = useState(initState);
 
   const onPlayChannelChange = e => {
     setNewChannel({ ...newChannel, [e.target.name]: e.target.value });
@@ -25,8 +26,12 @@ export default function FormAddNewChannel() {
     else { channelsActions.addNew(newChannel); }
   }
 
+  const onReset = () =>{
+    setNewChannel(initState)
+  }
+
   return <>
-    <form className='w-100' onSubmit={onPlayChannel}>
+    <form className='w-100' id="form-add-new-channel" onSubmit={onPlayChannel}>
       <div className='w-100 mb-1'>
         <label></label>
         <input className='w-100 br7' type="url" name='url'
@@ -54,7 +59,7 @@ export default function FormAddNewChannel() {
           <PlayIcon /><span className='ml-1'>Play</span>
         </button>
 
-        <button className='w-100 shadow br7 ml-1 bg-red' type='reset'>Reset</button>
+        <button className='w-100 shadow br7 ml-1 bg-red' type='reset' onClick={onReset}>Reset</button>
       </div>
     </form>
 

@@ -10,7 +10,7 @@ const Store = createStore({
     defaultChannels: [],
     iframeChannels: (() => {
       if (localStorage.getItem('iframe-channels')) return JSON.parse(localStorage.getItem('iframe-channels'))
-      else return []
+      else return [{ name: 'Impossiblue to work from home', url: 'https://www.youtube.com/embed/jXFevxFOk7g', type: "iframe" }]
     })(),
 
     favorites,

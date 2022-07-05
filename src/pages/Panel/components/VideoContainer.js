@@ -74,7 +74,7 @@ export default function VideoContainer() {
 
     {currentChannel.type === 'iframe'
       ? <iframe
-        className='w-100'
+        className='w-100 br7'
         title={currentChannel.name}
         src={currentChannel.url}
         frameBorder="0"

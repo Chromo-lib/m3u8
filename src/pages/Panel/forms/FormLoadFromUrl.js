@@ -2,7 +2,7 @@ import React from 'react';
 import useChannels from '../store/useChannels';
 import useModal from '../store/useModal';
 
-const st = `[
+const example = `[
   {
     "url": "https://siloh-ns1.plutotv.net/lilo/production/bein/master_1.m3u8",
     "name": "Bein Sport XTRA",
@@ -29,6 +29,6 @@ export default function FormLoadFromUrl() {
     </form>
 
     <p className='mb-0'>Playlist object structure:</p>
-    <pre className='w-100 br7 overflow'>{st}</pre>
+    <pre className='w-100 br7 overflow'>{example}</pre>
   </>
 }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useCallback} from 'react';
 import useChannels from '../store/useChannels';
 import useCurrentChannel from '../store/useCurrentChannel';
 import PlayIcon from '../icons/PlayIcon';
@@ -19,6 +19,10 @@ function ListChannels({ children, channels }) {
     }
   }
 
+  const onPlay = useCallback((channel) => {    
+    currentChannelActions.set({ ...channel });
+  },[currentChannel.url]);
+  
   return <ul className='h-100 overflow list-tv'>
     {children}
 
@@ -26,7 +30,7 @@ function ListChannels({ children, channels }) {
       className="d-flex align-center justify-between cp"
     >
       <div className={'d-flex align-center truncate' + (currentChannel.url === c.url ? ' active' : '')}
-        onClick={() => { currentChannelActions.set({ ...c }); }}>
+        onClick={() => { onPlay(c) }}>
         {currentChannel.url === c.url
           ? <PlayIcon />
           : <TvIcon />}

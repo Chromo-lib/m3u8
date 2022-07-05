@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 
 import ChannelQualityList from './ChannelQualityList';
 import FormAddNewChannel from '../forms/FormAddNewChannel';
@@ -15,6 +15,27 @@ import EllipsisIcon from '../icons/EllipsisIcon';
 export default function Header() {
   const [_, modalActions] = useModal();
 
+  const onMenu = useCallback((e) => {
+    const title = e.target.title || e.target.parentNode.title;
+
+    switch (title) {
+      case 'About':
+        modalActions.setContent({ title: 'About', content: <About /> });
+        break;
+
+      case 'Play Or Add New Channel':
+        modalActions.setContent({ title: 'Add New Channel', content: <FormAddNewChannel /> });
+        break;
+
+      case 'Load Channels From URL':
+        modalActions.setContent({ title: 'Load From Url', content: <FormLoadFromUrl /> });
+        break;
+
+      default:
+        break;
+    }
+  }, []);
+
   return <div className='w-100 d-flex justify-between'>
     <div className='dropdown'>
 
@@ -24,7 +45,7 @@ export default function Header() {
         <li
           className='d-flex align-center'
           title="Play Or Add New Channel"
-          onClick={() => { modalActions.setContent({ title: 'Add New Channel', content: <FormAddNewChannel /> }); }}>
+          onClick={onMenu}>
           <PlusIcon />
           <span className='ml-1'>add new channel</span>
         </li>
@@ -32,7 +53,7 @@ export default function Header() {
         <li
           className='d-flex align-center'
           title="Load Channels From URL"
-          onClick={() => { modalActions.setContent({ title: 'Load From Url', content: <FormLoadFromUrl /> }); }}>
+          onClick={onMenu}>
           <LoadIcon />
           <span className='ml-1'>Load Channels From URL</span>
         </li>
@@ -40,7 +61,7 @@ export default function Header() {
         <li
           className='d-flex align-center'
           title="About"
-          onClick={() => { modalActions.setContent({ title: 'About', content: <About /> }); }}>
+          onClick={onMenu}>
           <InfoIcon />
           <span className='ml-1'>About</span>
         </li>

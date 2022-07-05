@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "version": "1.0.7",
+  "version": "1.0.8",
   "name": "HLS Streaming Player",
   "description": "MP4, WebM and HLS Streaming Player with free TV channels",
   "action": {
