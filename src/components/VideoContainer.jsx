@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import * as Hls from 'hls.js';
+import Hls from 'hls.js';
 import useCurrentChannel from '../store/useCurrentChannel';
 
 import ChannelQualityInfo from './ChannelQualityInfo';
@@ -71,8 +71,7 @@ export default function VideoContainer() {
   }, [currentChannel.url, currentChannel.qualityIndex]);
 
   return <>
-
-    {currentChannel.type === 'iframe'
+    {currentChannel && currentChannel.type === 'iframe'
       ? <iframe
         className='w-100 br7'
         title={currentChannel.name}

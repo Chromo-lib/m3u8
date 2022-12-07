@@ -1,0 +1,19 @@
+{
+  "manifest_version": 2,
+  "version": "1.0.9",
+  "name": "HLS Streaming Player",
+  "description": "MP4, WebM, Iframe and HLS Streaming Player with free TV channels",
+  "icons": {
+    "34": "icons/34.png",
+    "128": "icons/128.png",
+    "512": "icons/512.png"
+  },
+  "browser_action": {
+    "default_title": "HLS Streaming Player",
+    "default_popup": "popup.html"
+  },
+  "permissions": [
+    "tabs"
+  ],
+  "content_security_policy": "script-src 'self'; object-src 'self'"
+}

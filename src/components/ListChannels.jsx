@@ -6,7 +6,6 @@ import TvIcon from '../icons/TvIcon';
 import HeartIcon from '../icons/HeartIcon';
 
 function ListChannels({ children, channels }) {
-
   const [channelsState, channelsActions] = useChannels();
   const [currentChannel, currentChannelActions] = useCurrentChannel();
 
@@ -26,7 +25,7 @@ function ListChannels({ children, channels }) {
   return <ul className='h-100 overflow list-tv'>
     {children}
 
-    {channels.length > 0 && channels.map((c, i) => <li key={i}
+    {channels && channels.length > 0 && channels.map((c, i) => <li key={i}
       className="d-flex align-center justify-between cp"
     >
       <div className={'d-flex align-center truncate' + (currentChannel.url === c.url ? ' active' : '')}
@@ -44,4 +43,4 @@ function ListChannels({ children, channels }) {
   </ul>
 }
 
-export default React.memo(ListChannels)
+export default ListChannels

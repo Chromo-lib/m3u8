@@ -10,7 +10,7 @@ import ListYt from './components/ListYt';
 import Header from './components/Header';
 import YoutubeIcon from './icons/YoutubeIcon';
 
-export default function Panel() {
+export default function App() {
   const [channelsState, channelsActions] = useChannels();
   const [channel, setChannel] = useState('');
   const [tempChannels, setTempChannels] = useState(channelsState.defaultChannels);
