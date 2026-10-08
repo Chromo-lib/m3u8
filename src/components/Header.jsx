@@ -1,76 +1,27 @@
-import React, { useCallback } from 'react';
-
+import React from 'react';
 import ChannelQualityList from './ChannelQualityList';
-import FormAddNewChannel from '../forms/FormAddNewChannel';
-
 import useModal from '../store/useModal';
-import FormLoadFromUrl from '../forms/FormLoadFromUrl';
-import About from './About';
-
 import PlusIcon from '../icons/PlusIcon';
-import LoadIcon from '../icons/LoadIcon';
-import InfoIcon from '../icons/InfoIcon';
-import EllipsisIcon from '../icons/EllipsisIcon';
+import FormAddStream from '../forms/FormAddStream';
 
 export default function Header() {
-  const [_, modalActions] = useModal();
+  const [, modalActions] = useModal();
 
-  const onMenu = useCallback((e) => {
-    const title = e.target.title || e.target.parentNode.title;
+  return (
+    <div className="flex w-full flex-wrap items-center justify-between gap-2 rounded-2xl border border-white/10 bg-zinc-900/80 px-3 py-2 shadow-lg shadow-black/10">
+      <button
+        type="button"
+        className="flex items-center gap-2 rounded-xl bg-[#eed75f] px-3 py-2 text-xs font-bold uppercase tracking-[0.14em] text-[#111] transition hover:opacity-90"
+        onClick={() => modalActions.setContent({
+          title: 'Add HLS stream',
+          content: <FormAddStream />
+        })}
+      >
+        <PlusIcon />
+        <span>Add stream</span>
+      </button>
 
-    switch (title) {
-      case 'About':
-        modalActions.setContent({ title: 'About', content: <About /> });
-        break;
-
-      case 'Play Or Add New Channel':
-        modalActions.setContent({ title: 'Add New Channel', content: <FormAddNewChannel /> });
-        break;
-
-      case 'Load Channels From URL':
-        modalActions.setContent({ title: 'Load From Url', content: <FormLoadFromUrl /> });
-        break;
-
-      default:
-        break;
-    }
-  }, []);
-
-  return <div className='w-100 d-flex justify-between'>
-    <div className='dropdown'>
-
-      <button><EllipsisIcon /> Menu</button>
-
-      <ul className='max-content'>
-        <li
-          className='d-flex align-center'
-          title="Play Or Add New Channel"
-          onClick={onMenu}>
-          <PlusIcon />
-          <span className='ml-1'>add new channel</span>
-        </li>
-
-        <li
-          className='d-flex align-center'
-          title="Load Channels From URL"
-          onClick={onMenu}>
-          <LoadIcon />
-          <span className='ml-1'>Load Channels From URL</span>
-        </li>
-
-        <li
-          className='d-flex align-center'
-          title="About"
-          onClick={onMenu}>
-          <InfoIcon />
-          <span className='ml-1'>About</span>
-        </li>
-      </ul>
-    </div>
-
-    <div className='d-flex align-center'>
-      <span className='ml-2'></span>
       <ChannelQualityList />
     </div>
-  </div>
+  );
 }

@@ -1,31 +1,68 @@
 import { createStore, createHook } from 'react-sweet-state';
 
-const localFavorites = localStorage.getItem('favorites');
-const favorites = localFavorites ? JSON.parse(localFavorites) : [];
-const playlistURL = localStorage.getItem('playlist') || 'https://api.npoint.io/c6ee3f6b723c086b35af';
-// https://bitbucket.org/!api/2.0/snippets/haikel/4Eq4ox/065fea1d6a2a37a229e465450b7d0e473400e129/files/m3u8.txt
+localStorage.removeItem('playlist');
+localStorage.removeItem('iframe-channels');
+
+const defaultChannel = {
+  name: 'Buenísima TV',
+  type: 'm3u8',
+  url: 'https://canal.mediaserver.com.co/live/buenisimatv.m3u8'
+};
+
+const savedStreams = JSON.parse(localStorage.getItem('custom-streams') || '[]');
+const customStreams = Array.isArray(savedStreams)
+  ? savedStreams.filter((stream) =>
+    stream &&
+    typeof stream.name === 'string' &&
+    typeof stream.url === 'string' &&
+    stream.type === 'm3u8'
+  )
+  : [];
+const defaultChannels = [
+  defaultChannel,
+  ...customStreams.filter((stream) => stream.url !== defaultChannel.url)
+];
+const savedFavorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+const knownStreamUrls = new Set(defaultChannels.map((stream) => stream.url));
+const favorites = Array.isArray(savedFavorites)
+  ? savedFavorites.filter((favorite) => favorite && knownStreamUrls.has(favorite.url))
+  : [];
 
 const Store = createStore({
   initialState: {
-    defaultChannels: [],
-    iframeChannels: (() => {
-      if (localStorage.getItem('iframe-channels')) return JSON.parse(localStorage.getItem('iframe-channels'))
-      else return [{ name: 'Impossiblue to work from home', url: 'https://www.youtube.com/embed/jXFevxFOk7g', type: "iframe" }]
-    })(),
-
+    defaultChannels,
     favorites,
-    loading: false,
-    url: playlistURL
   },
 
   actions: {
-    addNew: (channel) => ({ setState, getState }) => {
-      const favorites = [...getState().favorites];
-      if (channel.url.length > 15 && !getState().favorites.some(c => c.url === channel.url)) {
-        favorites.unshift(channel);
-        setState({ ...getState(), favorites })
-        localStorage.setItem('favorites', JSON.stringify(favorites));
+    addStream: (channel) => ({ setState, getState }) => {
+      const name = channel.name.trim();
+      const url = channel.url.trim();
+      let parsedUrl;
+
+      try {
+        parsedUrl = new URL(url);
+      } catch {
+        throw new Error('Enter a valid stream URL.');
       }
+
+      if (!name) throw new Error('Enter a name for the stream.');
+      if (!['http:', 'https:'].includes(parsedUrl.protocol)) {
+        throw new Error('Stream URLs must use HTTP or HTTPS.');
+      }
+
+      const streams = getState().defaultChannels;
+      if (streams.some((stream) => stream.url === url)) {
+        throw new Error('This stream has already been added.');
+      }
+
+      const stream = { name, url, type: 'm3u8' };
+      const defaultChannels = [...streams, stream];
+      localStorage.setItem('custom-streams', JSON.stringify(
+        defaultChannels.filter((item) => item.url !== defaultChannel.url)
+      ));
+      setState({ ...getState(), defaultChannels });
+      return stream;
     },
     addToFavorites: (channel) => ({ setState, getState }) => {
       const favorites = [...getState().favorites];
@@ -39,30 +76,6 @@ const Store = createStore({
       const favorites = getState().favorites.filter(c => c.url !== channel.url);
       setState({ ...getState(), favorites })
       localStorage.setItem('favorites', JSON.stringify(favorites));
-    },
-    setDefaultChannels: (defaultChannels) => ({ setState, getState }) => {
-      setState({ ...getState(), defaultChannels });
-    },
-    load: (url) => async ({ setState, getState }) => {
-      if (getState().loading === true) return;
-
-      setState({ ...getState(), loading: true });
-
-      const response = await fetch(url);
-      const defaultChannels = await response.json();
-
-      setState({ ...getState(), loading: false, defaultChannels, url });
-      localStorage.setItem('playlist', url);
-      return defaultChannels;
-    },
-    addNewIframeChannel: (channel) => ({ setState, getState }) => {
-      const channels = getState().iframeChannels || [];
-      if (channels.length < 1 || !channels.some(c => c.url === channel.url)) {
-        channels.unshift(channel);
-        setState({ ...getState(), channels })
-        localStorage.setItem('iframe-channels', JSON.stringify(channels));
-        window.location.reload();
-      }
     },
   },
 
