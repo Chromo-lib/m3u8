@@ -1,5 +1,4 @@
 import React from 'react';
-import PlayIcon from '../icons/PlayIcon';
 
 function formatBitrate(bitsPerSecond) {
   if (!Number.isFinite(bitsPerSecond) || bitsPerSecond <= 0) return '—';
@@ -24,7 +23,7 @@ function formatTime(seconds) {
   return hours ? `${String(hours).padStart(2, '0')}:${time}` : time;
 }
 
-export default function StreamDiagnostics({ metrics, channel, isRecording, onToggleRecording }) {
+export default function StreamDiagnostics({ metrics }) {
   const mode = metrics.isLive == null
     ? 'Reading playlist'
     : metrics.isLive
@@ -63,17 +62,10 @@ export default function StreamDiagnostics({ metrics, channel, isRecording, onTog
       <div className="flex flex-wrap items-center justify-between gap-3">
         <summary className="min-w-0 flex-1 cursor-pointer list-none [&::-webkit-details-marker]:hidden">
           <span className="flex flex-wrap items-center gap-2 text-xs font-bold uppercase tracking-[0.18em] text-white">
-            <PlayIcon width="12" height="12" />
-            <span>{channel.name}</span>
+            <span>Stream diagnostics</span>
             <span className="rounded-full bg-white/10 px-2 py-0.5 text-[9px] tracking-normal text-white/75">
               {metrics.status}
             </span>
-          </span>
-          <span className="mt-1 block break-all text-[11px] text-white/50">
-            {channel.url}
-          </span>
-          <span className="mt-2 block text-[11px] font-semibold uppercase tracking-[0.15em] text-white/80">
-            Stream diagnostics
           </span>
           <span className="mt-1 block text-[11px] text-white/50">
             Playback and adaptive bitrate metrics reported by hls.js.
@@ -81,16 +73,6 @@ export default function StreamDiagnostics({ metrics, channel, isRecording, onTog
         </summary>
 
         <div className="flex items-center gap-2">
-          <button
-            type="button"
-            className={[
-              'rounded-xl px-3 py-2 text-[10px] font-bold uppercase tracking-[0.12em] transition hover:opacity-90',
-              isRecording ? 'bg-red-500 text-white' : 'bg-[#eed75f] text-[#111]'
-            ].join(' ')}
-            onClick={onToggleRecording}
-          >
-            {isRecording ? 'Stop & download' : 'Record stream'}
-          </button>
           {metrics.targetDuration > 0 && (
             <span className="rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-[10px] text-white/60">
               Segment target {formatSeconds(metrics.targetDuration)}

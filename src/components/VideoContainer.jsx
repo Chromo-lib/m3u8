@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Hls from 'hls.js';
 import useCurrentChannel from '../store/useCurrentChannel';
-import PlayIcon from '../icons/PlayIcon';
 import StreamDiagnostics from './StreamDiagnostics';
 
 const initialMetrics = {
@@ -57,15 +56,10 @@ function readMetrics(video, hls) {
   };
 }
 
-export default function VideoContainer() {
-  const videoRef = useRef(null);
+export default function VideoContainer({ videoRef }) {
   const hlsRef = useRef(null);
-  const recorderRef = useRef(null);
-  const recordedChunksRef = useRef([]);
   const [currentChannel, currentChannelActions] = useCurrentChannel();
   const [metrics, setMetrics] = useState(initialMetrics);
-  const [isRecording, setIsRecording] = useState(false);
-  const [recordingError, setRecordingError] = useState('');
 
   useEffect(() => {
     const video = videoRef.current;
@@ -186,9 +180,6 @@ export default function VideoContainer() {
       video.removeEventListener('ended', onEnded);
       video.removeEventListener('error', onMediaError);
 
-      if (recorderRef.current?.state === 'recording') {
-        recorderRef.current.stop();
-      }
       if (hls) {
         hls.destroy();
         if (hlsRef.current === hls) hlsRef.current = null;
@@ -206,82 +197,6 @@ export default function VideoContainer() {
     }
   }, [currentChannel.qualityIndex]);
 
-  const onToggleRecording = () => {
-    const recorder = recorderRef.current;
-    if (recorder?.state === 'recording') {
-      recorder.stop();
-      return;
-    }
-
-    const video = videoRef.current;
-    const captureStream = video?.captureStream || video?.mozCaptureStream;
-    if (!video || !captureStream || typeof MediaRecorder === 'undefined') {
-      setRecordingError('Stream recording is not supported by this browser.');
-      return;
-    }
-    if (video.paused) {
-      setRecordingError('Start playback before recording the stream.');
-      return;
-    }
-
-    const mimeType = [
-      'video/webm;codecs=vp9,opus',
-      'video/webm;codecs=vp8,opus',
-      'video/webm',
-      'video/mp4'
-    ].find((type) => MediaRecorder.isTypeSupported(type));
-
-    if (!mimeType) {
-      setRecordingError('This browser does not support a downloadable recording format.');
-      return;
-    }
-
-    try {
-      const mediaRecorder = new MediaRecorder(captureStream.call(video), { mimeType });
-      recordedChunksRef.current = [];
-      setRecordingError('');
-      mediaRecorder.ondataavailable = (event) => {
-        if (event.data.size > 0) recordedChunksRef.current.push(event.data);
-      };
-      mediaRecorder.onstart = () => setIsRecording(true);
-      mediaRecorder.onerror = () => {
-        setRecordingError('Recording failed. Check stream playback and browser permissions.');
-        setIsRecording(false);
-      };
-      mediaRecorder.onstop = () => {
-        const blob = new Blob(recordedChunksRef.current, { type: mediaRecorder.mimeType });
-        recordedChunksRef.current = [];
-        recorderRef.current = null;
-        setIsRecording(false);
-
-        if (blob.size === 0) {
-          setRecordingError('No playable data was captured. Try recording while the stream is playing.');
-          return;
-        }
-
-        const objectUrl = URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        const extension = mediaRecorder.mimeType.includes('mp4') ? 'mp4' : 'webm';
-        const fileName = (currentChannel.name || 'stream')
-          .trim()
-          .replace(/[^a-z0-9]+/gi, '-')
-          .replace(/^-|-$/g, '')
-          .toLowerCase();
-        link.href = objectUrl;
-        link.download = `${fileName || 'stream'}-${new Date().toISOString().replace(/[:.]/g, '-')}.${extension}`;
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
-        window.setTimeout(() => URL.revokeObjectURL(objectUrl), 1000);
-      };
-
-      recorderRef.current = mediaRecorder;
-      mediaRecorder.start(1000);
-    } catch {
-      setRecordingError('The browser could not start recording this stream.');
-    }
-  };
-
   return (
     <div className="flex min-h-0 flex-1 flex-col gap-3 rounded-[22px] border border-white/10 bg-zinc-900/80 p-3 shadow-2xl shadow-black/20 sm:p-4">
       <video
@@ -292,17 +207,7 @@ export default function VideoContainer() {
         playsInline
       />
 
-      <StreamDiagnostics
-        metrics={metrics}
-        channel={currentChannel}
-        isRecording={isRecording}
-        onToggleRecording={onToggleRecording}
-      />
-      {recordingError && (
-        <p role="alert" className="rounded-xl border border-red-400/20 bg-red-400/5 px-3 py-2 text-xs text-red-200">
-          {recordingError}
-        </p>
-      )}
+      <StreamDiagnostics metrics={metrics} />
     </div>
   );
 }
