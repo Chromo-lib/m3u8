@@ -1,10 +1,10 @@
 # HLS Streaming Player
 
-A browser-based HLS player for the Buenísima TV stream and HLS playlists you add yourself. It uses [hls.js](https://github.com/video-dev/hls.js) for adaptive streaming and Tailwind CSS v4 for the interface.
+A browser-based HLS player for built-in and user-added HLS playlists. It uses [hls.js](https://github.com/video-dev/hls.js) for adaptive streaming and Tailwind CSS v4 for the interface.
 
 ## Features
 
-- Play the Buenísima TV stream or add another HLS playlist using its URL and a display name.
+- Play the built-in stream or add another HLS playlist using its URL and a display name.
 - Save added streams in the browser and switch between them from the channel list.
 - Select automatic or available video quality renditions.
 - Inspect playback state, stream type, resolution, codecs, frame rate, bitrate, estimated bandwidth, forward buffer, live latency, and dropped frames in the collapsible **Stream diagnostics** panel.
