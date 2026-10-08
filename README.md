@@ -27,6 +27,10 @@ Create a production build with:
 npm run build
 ```
 
+## GitHub Pages
+
+The `Deploy to GitHub Pages` workflow builds and deploys the site when changes are pushed to `main`, or when started manually from the Actions tab. In the repository settings, set **Pages → Build and deployment → Source** to **GitHub Actions**. After the first successful deployment, the site is available at <https://chromo-lib.github.io/m3u8/>.
+
 ## Browser notes
 
 Browsers with Media Source Extensions use hls.js. Browsers that provide native HLS playback use their built-in player. HLS playback may also depend on the stream server allowing cross-origin (CORS) requests from this app.

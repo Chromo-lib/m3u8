@@ -9,6 +9,7 @@ const from = isChrome ? 'browser' : 'chrome';
 const to = isChrome ? 'chrome' : 'browser';
 
 export default defineConfig({
+  base: process.env.GITHUB_ACTIONS === 'true' ? '/m3u8/' : '/',
   plugins: [
     {
       ...rollupReplaceWord({ from, to }),
